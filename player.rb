@@ -21,6 +21,7 @@ class Player
   end
 end
 
+# Test cases
 player = Player.new("Charlie", 0, 3)
 puts player.get_name
 puts player.get_score
