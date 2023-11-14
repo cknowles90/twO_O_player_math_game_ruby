@@ -24,32 +24,57 @@ player2_lives = gets.chomp.to_i
 ui_player1 = UserInterface.new
 ui_player2 = UserInterface.new
 
-player1 = Player.new(player1_name, player1_score, player1_lives, ui_player1)
-player2 = Player.new(player2_name, player2_score, player2_lives, ui_player2)
+player1 = Player.new(player1_name, player1_score, player1_lives)
+player2 = Player.new(player2_name, player2_score, player2_lives)
 
 # Create the Question, Tun and Game class instances
 question = Question.new
-turn = Turn.new
-game = Game.new
+turn = Turn.new(player1)
+game = Game.new(player2)
 
 # Example usage with game logic
-question1 = "What does 5 + 5 equal?"
-player1.ui.display_question(player1, question1)
-player1_answer = player1.ui.collect_player_answer
+while player1.get_lives > 0 && player2.get_lives > 0
+  # Generate a question
+  new_question, answer = question.new_question
 
-if player1_answer == "10"
-  player1.increase_score
-  player1.ui.display_correct_answer_feedback(player1, player2)
-else
-  player1.decrease_lives
-  player1.ui.display_incorrect_answer_feedback(player1, player2)
+  # Player1's turn
+  ui_player1.display_question(new_question)
+  player1_answer = ui_player1.collect_player_answer
+
+  if player1_answer == answer.to_s
+    player1.increase_score
+    ui_player1.display_correct_answer_feedback(player1, player2)
+  else
+    player1.decrease_lives
+    ui_player1.display_incorrect_answer_feedback(player1, player2)
+  end
+
+  # Continue the game with new questions and turns
+  break if player1.get_lives == 0 || player2.get_lives == 0
+
+  # Generate a new question
+  new_question, answer = question.new_question
+
+  # Player2's turn
+  ui_player2.display_question(new_question)
+  player2_answer = ui_player2.collect_player_answer
+
+  if player2_answer == answer.to_s
+    player2.increase_score
+    ui_player2.display_correct_answer_feedback(player1, player2)
+  else
+    player2.decrease_lives
+    ui_player2.display_incorrect_answer_feedback(player1, player2)
+  end
 end
 
-# Continue the game with new questions and turns
-
 # Game ends, and display the winner
-if player1.get_score > player2.get_score
-  player1.ui.display_winner(player1)
-else
-  player2.ui.display_winner(player2)
+if player1.get_lives == 0
+  winning_player = player2
+  losing_player = player1
+  ui_player2.display_winner(winning_player, losing_player)
+else 
+  winning_player = player1
+  losing_player = player2
+  ui_player1.display_winner(winning_player, losing_player)
 end

@@ -1,7 +1,6 @@
 class UserInterface
   def initialize
-    @input = input
-    @output = output
+
   end
 
   def display_question(question)
@@ -25,14 +24,16 @@ class UserInterface
     puts "----- NEW TURN ------"
   end
 
-  def display_winner(player)
-    puts "#{player.get_name} wins the battle with a score of #{player.get_score} and #{player.get_lives} lives remaining."
+  def display_winner(winning_player, losing_player)
+    puts "#{winning_player.get_name} wins the battle with a score of #{winning_player.get_score} and #{winning_player.get_lives} lives remaining."
+    puts "#{losing_player.get_name} is a loser, but managed to score #{losing_player.get_score} with #{losing_player.get_lives} lives remaining."
     puts "----- GAME OVER -----"
     puts "Goodbye!"
   end
 
   def display_scores(player1, player2)
-    puts "#{player.get_name}'s score: #{player.get_score}, lives remaining: #{player.get_lives}"
+    puts "#{player1.get_name}'s score: #{player1.get_score}, lives remaining: #{player1.get_lives}"
+    puts "#{player2.get_name}'s score: #{player2.get_score}, lives remaining: #{player2.get_lives}"
   end
 
 end

@@ -7,14 +7,14 @@ class Turn
     @question = Question.new
   end
 
-  def play_turn(player)
-    display_question(player)
+  def play_turn
+    display_question
     player_answer = get_player_answer
-    check_answer(player, player_answer)
+    check_answer(player_answer)
   end
 
-  def display_question
-    question, _ = @question.new_question
+  def display_question(new_question)
+    question, _ = new_question
     puts question
   end
 
@@ -32,15 +32,15 @@ class Turn
   end
 end
 
-# Test cases
-player = Player.new("Bob", 0. 3)
-turn = Turn.new(player)
-# Simulate a turn
-puts "Turn for #{player.get_name}"
-turn.play_turn
-# Test with incorrect answer
-player = Player.new("Claire", 0, 3)
-turn = Turn.new(player)
-puts "Turn for #{player.get_name}"
-puts "Simulating an incorrect answer"
-turn.check_answer("42") 
+# # Test cases
+# player = Player.new("Bob", 0. 3)
+# turn = Turn.new(player)
+# # Simulate a turn
+# puts "Turn for #{player.get_name}"
+# turn.play_turn
+# # Test with incorrect answer
+# player = Player.new("Claire", 0, 3)
+# turn = Turn.new(player)
+# puts "Turn for #{player.get_name}"
+# puts "Simulating an incorrect answer"
+# turn.check_answer("42") 
